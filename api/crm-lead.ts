@@ -64,6 +64,26 @@ export default async function handler(req: Request): Promise<Response> {
       body: JSON.stringify({ funnel_name: 'Turma #37', nome, whatsapp, email }),
     }).catch((err) => console.error('Erro ao enviar boas-vindas:', err));
 
+    // Adiciona lead na campanha de disparo de planilha (acumula, não envia imediatamente)
+    const disparoCampanhaId = 'a3a93708-fe8b-48f2-a2e2-aa2f951b0df4';
+    const phoneClean = whatsapp.replace(/\D/g, '');
+    fetch(`${crmUrl}/rest/v1/disparo_leads`, {
+      method: 'POST',
+      headers: {
+        apikey: crmKey,
+        Authorization: `Bearer ${crmKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        campanha_id: disparoCampanhaId,
+        nome,
+        phone: phoneClean,
+        status: 'pendente',
+        ordem: Date.now(),
+      }),
+    }).catch((err) => console.error('Erro ao adicionar lead no disparo:', err));
+
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
