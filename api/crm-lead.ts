@@ -57,6 +57,13 @@ export default async function handler(req: Request): Promise<Response> {
       });
     }
 
+    // Dispara boas-vindas WhatsApp (fire-and-forget)
+    fetch(`${crmUrl}/functions/v1/boas-vindas-enviar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ funnel_name: 'Turma #37', nome, whatsapp, email }),
+    }).catch((err) => console.error('Erro ao enviar boas-vindas:', err));
+
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
