@@ -64,8 +64,10 @@ export default async function handler(req: Request): Promise<Response> {
       body: JSON.stringify({ funnel_name: 'Turma #37', nome, whatsapp, email }),
     }).catch((err) => console.error('Erro ao enviar boas-vindas:', err));
 
-    // Adiciona lead na campanha de disparo de planilha (acumula, não envia imediatamente)
-    const disparoCampanhaId = 'a3a93708-fe8b-48f2-a2e2-aa2f951b0df4';
+    // Adiciona lead na campanha de disparo — alterna PM e IG a cada registro
+    const campanhasPM = 'a3a93708-fe8b-48f2-a2e2-aa2f951b0df4';
+    const campanhasIG = '0090fc04-3894-4cec-a8ca-ebe6065bee25';
+    const disparoCampanhaId = Date.now() % 2 === 0 ? campanhasPM : campanhasIG;
     const phoneClean = whatsapp.replace(/\D/g, '');
     fetch(`${crmUrl}/rest/v1/disparo_leads`, {
       method: 'POST',
