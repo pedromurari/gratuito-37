@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import HeroSection from '@/components/HeroSection';
+import CourseCalendarSection from '@/components/CourseCalendarSection';
 import CourseSection from '@/components/CourseSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import InstituteSection from '@/components/InstituteSection';
@@ -49,6 +50,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <HeroSection />
+      <CourseCalendarSection />
       <CourseSection />
       <TestimonialsSection />
       <InstituteSection />
