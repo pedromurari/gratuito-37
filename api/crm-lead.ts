@@ -57,13 +57,6 @@ export default async function handler(req: Request): Promise<Response> {
       });
     }
 
-    // Dispara boas-vindas WhatsApp (fire-and-forget)
-    fetch(`${crmUrl}/functions/v1/boas-vindas-enviar`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ funnel_name: 'Turma #37', nome, whatsapp, email }),
-    }).catch((err) => console.error('Erro ao enviar boas-vindas:', err));
-
     // Adiciona lead na campanha de disparo — alterna PM e IG a cada registro
     const campanhasPM = 'a3a93708-fe8b-48f2-a2e2-aa2f951b0df4';
     const campanhasIG = '0090fc04-3894-4cec-a8ca-ebe6065bee25';
